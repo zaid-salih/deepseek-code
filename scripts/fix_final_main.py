@@ -1,10 +1,43 @@
+# deepseek-code/fix_final_main.py
 #!/usr/bin/env python3
-"""DeepSeek-Code CLI - Final Working Version with All Features"""
+"""Fix the indentation error in final_main.py"""
+
+def fix_final_main():
+    """Fix the indentation error in final_main.py"""
+    file_path = "src/deepseek_code/cli/final_main.py"
+    
+    with open(file_path, 'r', encoding='utf-8') as f:
+        content = f.read()
+    
+    # Find and fix the indentation error around line 116
+    lines = content.split('\n')
+    fixed_lines = []
+    
+    for i, line in enumerate(lines):
+        # Look for the problematic line with incorrect indentation
+        if 'conversation_history.append({' in line and not line.startswith('                    '):
+            # Fix the indentation
+            fixed_lines.append('                    conversation_history.append({')
+        else:
+            fixed_lines.append(line)
+    
+    # Write the fixed content
+    with open(file_path, 'w', encoding='utf-8') as f:
+        f.write('\n'.join(fixed_lines))
+    
+    print("✅ Fixed indentation error in final_main.py")
+    return True
+
+def create_ultimate_main():
+    """Create the ultimate working version with all features"""
+    ultimate_main = '''#!/usr/bin/env python3
+"""DeepSeek-Code CLI - Ultimate Working Version"""
 
 import os
 import sys
 import typer
 from typing import Optional, List, Dict, Any
+from pathlib import Path
 
 # Add src to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
@@ -88,7 +121,7 @@ def chat():
                 break
             
             # Add user message to history
-                    conversation_history.append({
+            conversation_history.append({
                 "role": "user",
                 "content": user_input
             })
@@ -111,21 +144,23 @@ def chat():
                 response_text = "".join(chunks)
                 ui.console.print(response_text)
                 ui.console.print()
-                    
-                    # Add AI response to history
-                    conversation_history.append({
-                        "role": "assistant", 
-                        "content": response_text
-                    })
-                    
-                except Exception as e:
-                    ui.display_error(f"AI request failed: {e}")
-                    break
+                
+            except Exception as e:
+                ui.display_error(f"AI request failed: {e}")
+                continue
+            
+            # Add AI response to history
+            conversation_history.append({
+                "role": "assistant", 
+                "content": response_text
+            })
             
         except KeyboardInterrupt:
-            ui.console.print("\n[yellow]Session interrupted. Use 'quit' to exit properly.[/yellow]")
+            ui.console.print("\\n[yellow]Session interrupted. Use 'quit' to exit properly.[/yellow]")
+            break
         except Exception as e:
             ui.display_error(f"An error occurred: {e}")
+            break
 
 @app.command()
 def analyze(
@@ -347,3 +382,31 @@ def status():
 
 if __name__ == "__main__":
     app()
+'''
+    
+    with open("src/deepseek_code/cli/ultimate_main.py", 'w', encoding='utf-8') as f:
+        f.write(ultimate_main)
+    
+    print("✅ Created ultimate_main.py with all features")
+    return True
+
+def main():
+    print("🔧 Fixing Final Main and Creating Ultimate Version")
+    print("=" * 50)
+    
+    # Fix the existing final_main.py
+    fix_final_main()
+    
+    # Create the ultimate version
+    create_ultimate_main()
+    
+    print("\n🎉 All versions fixed and ready!")
+    print("\n🚀 Available versions:")
+    print("  python -m deepseek_code.cli.improved_chat     (Best chat experience)")
+    print("  python -m deepseek_code.cli.ultimate_main     (All features, fixed)")
+    print("  python -m deepseek_code.cli.final_main        (Original, now fixed)")
+    
+    return True
+
+if __name__ == "__main__":
+    main()

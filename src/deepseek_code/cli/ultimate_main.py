@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""DeepSeek-Code CLI - Final Working Version with All Features"""
+"""DeepSeek-Code CLI - Ultimate Working Version"""
 
 import os
 import sys
 import typer
 from typing import Optional, List, Dict, Any
+from pathlib import Path
 
 # Add src to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
@@ -88,7 +89,7 @@ def chat():
                 break
             
             # Add user message to history
-                    conversation_history.append({
+            conversation_history.append({
                 "role": "user",
                 "content": user_input
             })
@@ -111,21 +112,23 @@ def chat():
                 response_text = "".join(chunks)
                 ui.console.print(response_text)
                 ui.console.print()
-                    
-                    # Add AI response to history
-                    conversation_history.append({
-                        "role": "assistant", 
-                        "content": response_text
-                    })
-                    
-                except Exception as e:
-                    ui.display_error(f"AI request failed: {e}")
-                    break
+                
+            except Exception as e:
+                ui.display_error(f"AI request failed: {e}")
+                continue
+            
+            # Add AI response to history
+            conversation_history.append({
+                "role": "assistant", 
+                "content": response_text
+            })
             
         except KeyboardInterrupt:
             ui.console.print("\n[yellow]Session interrupted. Use 'quit' to exit properly.[/yellow]")
+            break
         except Exception as e:
             ui.display_error(f"An error occurred: {e}")
+            break
 
 @app.command()
 def analyze(

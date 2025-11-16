@@ -1,3 +1,0 @@
-[console_scripts]
-deepseek = deepseek_code.cli.main:app
-deepseek-code = deepseek_code.cli.main:app
