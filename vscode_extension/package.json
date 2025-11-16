@@ -1,0 +1,112 @@
+// deepseek-code/vscode_extension/package.json
+{
+  "name": "deepseek-code",
+  "displayName": "DeepSeek-Code",
+  "description": "AI-powered code assistance with DeepSeek integration",
+  "version": "1.0.0",
+  "publisher": "deepseek-code",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other",
+    "Programming Languages",
+    "AI"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "deepseek-code.startChat",
+        "title": "DeepSeek: Start Chat",
+        "category": "DeepSeek-Code"
+      },
+      {
+        "command": "deepseek-code.analyzeFile",
+        "title": "DeepSeek: Analyze Current File",
+        "category": "DeepSeek-Code"
+      },
+      {
+        "command": "deepseek-code.refactorCode",
+        "title": "DeepSeek: Refactor Selection",
+        "category": "DeepSeek-Code"
+      },
+      {
+        "command": "deepseek-code.explainCode",
+        "title": "DeepSeek: Explain Code",
+        "category": "DeepSeek-Code"
+      },
+      {
+        "command": "deepseek-code.generateTests",
+        "title": "DeepSeek: Generate Tests",
+        "category": "DeepSeek-Code"
+      }
+    ],
+    "menus": {
+      "command-palette": [
+        {
+          "command": "deepseek-code.startChat",
+          "when": "true"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "deepseek-code.analyzeFile",
+          "when": "editorHasSelection",
+          "group": "deepseek@1"
+        },
+        {
+          "command": "deepseek-code.refactorCode",
+          "when": "editorHasSelection",
+          "group": "deepseek@2"
+        },
+        {
+          "command": "deepseek-code.explainCode",
+          "when": "editorHasSelection",
+          "group": "deepseek@3"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "DeepSeek-Code",
+      "properties": {
+        "deepseek-code.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "DeepSeek API Key (optional - uses CLI config if available)"
+        },
+        "deepseek-code.autoSuggest": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable automatic code suggestions"
+        },
+        "deepseek-code.model": {
+          "type": "string",
+          "default": "deepseek-coder",
+          "description": "DeepSeek model to use"
+        },
+        "deepseek-code.maxTokens": {
+          "type": "number",
+          "default": 2048,
+          "description": "Maximum tokens for AI responses"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "@types/node": "16.x",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "axios": "^1.3.4"
+  }
+}
